@@ -5,13 +5,13 @@ using System.Linq;
 
 namespace HeroRepo.Core
 {
-  public class HeroRepository : IHeroRepository
+  public class HeroDictionaryRepository : IHeroRepository
   {
     public static int INIT_MAX_HEROES = 1000;
 
     public Dictionary<string, Hero> Heroes { get; }
 
-    public HeroRepository()
+    public HeroDictionaryRepository()
     {
       /// expected 100000 max items should be relatively ok to handle with a dictionary
       Heroes = new Dictionary<string, Hero>(INIT_MAX_HEROES);
