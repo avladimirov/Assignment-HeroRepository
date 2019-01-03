@@ -7,7 +7,7 @@ namespace HeroRepo.Core
 {
   public class HeroDictionaryRepository : IHeroRepository
   {
-    public static int INIT_MAX_HEROES = 1000;
+    public static int INIT_MAX_HEROES = 100000;
 
     public Dictionary<string, Hero> Heroes { get; }
 

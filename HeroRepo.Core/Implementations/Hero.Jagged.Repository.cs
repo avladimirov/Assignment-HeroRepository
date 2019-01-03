@@ -11,6 +11,8 @@ namespace HeroRepo.Core
     public static int INIT_MAX_HEROES = 10000;
 
     private IComparer<Hero> _comparer = new HeroComparerer();
+    private IComparer<Hero> _exComparer = new HeroExtendedComparerer();
+
     public Dictionary<uint, SortedSet<Hero>> Heroes { get; }
 
     public HeroJaggedRepository()
@@ -43,7 +45,7 @@ namespace HeroRepo.Core
       foreach (var atkSet in Heroes.Values)
       {
         atkSet.TryGetValue(tmp, out Hero result);
-        if(result != null)
+        if (result != null)
         {
           atkSet.Remove(result);
           return true;
@@ -56,7 +58,7 @@ namespace HeroRepo.Core
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public IEnumerable<Hero> Find(string type)
     {
-      return Search(type : type, top: 10).ToList();
+      return Search(type: type, top: 10).ToList();
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -68,51 +70,47 @@ namespace HeroRepo.Core
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private IEnumerable<Hero> Search(string type = null, int top = 10)
     {
-      int count = 0;
-      SortedSet<Hero> result = new SortedSet<Hero>(_comparer);
+      SortedSet<Hero> result = new SortedSet<Hero>(_exComparer);
       for (uint i = 1000; i >= 100; i--)
       {
-        var atkSet = Heroes[i];
+        IEnumerable<Hero> atkSet = Heroes[i];
 
         // filter by type
         if (!String.IsNullOrEmpty(type))
         {
-          atkSet.Where(h => h.Type == type);
+          atkSet = atkSet.Where(h => h.Type == type);
         }
 
         if (atkSet.Any())
         {
           result.UnionWith(atkSet);
-          count += atkSet.Count;
         }
 
-        if (count >= top) break;
+        if (result.Count >= top) break;
       }
 
       return result;
     }
   }
 
-  internal class HeroComparerer : StringComparer, IComparer<Hero>
+  internal class HeroComparerer : IComparer<Hero>
   {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public int Compare(Hero x, Hero y)
     {
-      return InvariantCulture.Compare(x.Name, y.Name);
+      return String.Compare(x.Name, y.Name, false);
     }
+  }
 
-    public override int Compare(string x, string y)
+  internal class HeroExtendedComparerer : IComparer<Hero>
+  {
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public int Compare(Hero x, Hero y)
     {
-      return InvariantCulture.Compare(x, y);
-    }
+      if (x.Attack == y.Attack)
+        return String.Compare(x.Name, y.Name, false);
 
-    public override bool Equals(string x, string y)
-    {
-      return InvariantCulture.Equals(x, y);
-    }
-
-    public override int GetHashCode(string obj)
-    {
-      return InvariantCulture.GetHashCode(obj);
+      return x.Attack > y.Attack ? -1 : 1;
     }
   }
 }
