@@ -1,0 +1,59 @@
+add HERO_NAME HERO_TYPE HERO_ATTACK - adds new HERO to the game
+HERO_NAME can be any unique string from 1 to 30 characters
+HERO_TYPE can be any string from 1 to 40 characters and may not be unique
+HERO_ATTACK can be any number between 100 and 1000, inclusive
+Print "SUCCESS: HERO_NAME added!", if the HERO is added successfully
+Print "FAIL: HERO_NAME already exists!", if the HERO already exists
+remove HERO_NAME - removes an existing HERO with HERO_NAME from the game
+Print "SUCCESS: HERO_NAME removed!", if the HERO was removed successfully
+Print "FAIL: HERO_NAME could not be found!", if the HERO does not exist in the game
+find HERO_TYPE - finds the top 10 HEROs, ordered by attack in descending order and then by their name in ascending order
+Print the results in the following format "RESULT: HERO, HERO, HERO" where HERO should be printed in the format "HERO_NAME[HERO_TYPE](HERO_ATTACK)". If no HEROs are found just print "RESULT: " (ending with one space)
+power NUMBER_OF_HEROS - prints the top NUMBER_OF_HEROS most powerful HEROs currently in the game in the same format as the "find" command. If there are less HEROs than requested just return them.
+end - marks the end of the input
+
+
+CONSTRAINTS
+
+All HERO_NAME and HERO_TYPE will consist of letters and digits only.
+The total lines in the input will be between 1 and 100 000
+Time limit: 0.6s
+
+SAMPLE INPUT:
+
+add Hulk Boss 100
+add Spiderman Marvel 250
+add Batman Marvel 200
+add Spiderman MutatedHuman 180
+add TheJoker Boss 500
+add MJ MutatedHuman 200
+add Venom Marvel 300
+add Spiderman MutatedHuman 180
+power 3
+find Marvel
+find Boss
+remove BlackWidow
+remove TheJoker
+power 3
+find BlackWidow
+find Boss
+end
+
+SAMPLE OUTPUT:
+
+SUCCESS: Hulk added!
+SUCCESS: Spiderman added!
+SUCCESS: Batman added!
+SUCCESS: Spiderman added!
+SUCCESS: TheJoker added!
+SUCCESS: MJ added!
+SUCCESS: Venom added!
+FAIL: Spiderman already exists!
+RESULT: TheJoker[Boss](500), Venom[Marvel](300), Spiderman[Marvel](250)
+RESULT: Venom[Marvel](300), Spiderman[Marvel](250), Batman[Marvel](200)
+RESULT: TheJoker[Boss](500), Hulk[Boss](100)
+FAIL: BlackWidow could not be found!
+SUCCESS: TheJoker removed!
+RESULT: Venom[Marvel](300), Spiderman[Marvel](250), Batman[Marvel](200)
+RESULT:
+RESULT: Hulk[Boss](100)
