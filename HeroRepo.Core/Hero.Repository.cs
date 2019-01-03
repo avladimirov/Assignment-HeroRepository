@@ -7,7 +7,7 @@ namespace HeroRepo.Core
 {
   public class HeroRepository : IHeroRepository
   {
-    public static int INIT_MAX_HEROES = Int32.MaxValue;
+    public static int INIT_MAX_HEROES = 1000;
 
     public Dictionary<string, Hero> Heroes { get; }
 
@@ -34,20 +34,20 @@ namespace HeroRepo.Core
       return Search(type).ToList();
     }
 
-    public IEnumerable<Hero> Power(uint top)
+    public IEnumerable<Hero> Power(int top)
     {
-      return Search().Take(10).ToList();
+      return Search().Take(top).ToList();
     }
 
     private IEnumerable<Hero> Search(string type = null)
     {
       var results = Heroes.Values.AsQueryable();
-      if (String.IsNullOrEmpty(type))
+      if (!String.IsNullOrEmpty(type))
       {
         results = results.Where(h => h.Type == type);
       }
 
-      return results.OrderByDescending(h => h.Attack).OrderBy(h => h.Name);
+      return results.OrderByDescending(h => h.Attack).ThenBy(h => h.Name);
     }
   }
 }

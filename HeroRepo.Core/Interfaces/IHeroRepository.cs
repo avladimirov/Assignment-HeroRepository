@@ -10,6 +10,6 @@ namespace HeroRepo.Core.Interfaces
 
     IEnumerable<Hero> Find(string type);
 
-    IEnumerable<Hero> Power(uint top);
+    IEnumerable<Hero> Power(int top);
   }
 }
