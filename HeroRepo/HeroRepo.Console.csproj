@@ -6,6 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="sample.input.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="sample.input.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HeroRepo.Core\HeroRepo.Core.csproj" />
   </ItemGroup>
 

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "HeroRepo.Console": {
+      "commandName": "Project",
+      "commandLineArgs": "<< sample.input.txt"
+    }
+  }
+}

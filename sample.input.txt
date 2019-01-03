@@ -1,0 +1,17 @@
+add Hulk Boss 100
+add Spiderman Marvel 250
+add Batman Marvel 200
+add Spiderman MutatedHuman 180
+add TheJoker Boss 500
+add MJ MutatedHuman 200
+add Venom Marvel 300
+add Spiderman MutatedHuman 180
+power 3
+find Marvel
+find Boss
+remove BlackWidow
+remove TheJoker
+power 3
+find BlackWidow
+find Boss
+end

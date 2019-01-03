@@ -13,6 +13,7 @@ namespace HeroRepo.Core
 
     public HeroRepository()
     {
+      /// expected 100000 max items should be relatively ok to handle with a dictionary
       Heroes = new Dictionary<string, Hero>(INIT_MAX_HEROES);
     }
 
