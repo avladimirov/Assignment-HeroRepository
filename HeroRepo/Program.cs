@@ -2,7 +2,10 @@
 using HeroRepo.Core;
 using HeroRepo.Core.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HeroRepo
@@ -12,7 +15,8 @@ namespace HeroRepo
     [STAThread()]
     static void Main(string[] args)
     {
-      HeroDictionaryRepository.INIT_MAX_HEROES = 100000;
+      //Generator();
+
       System.Console.WriteLine("Output: ");
       Stopwatch _stopWatch = null;
 
@@ -64,9 +68,66 @@ namespace HeroRepo
       }
     }
 
-    static void Generator(int linesCount)
+    static void Generator()
     {
+      var types_count = 50;
+      var heroes_count = 1000;
+      var lines_count = 10000;
 
+      var types = new List<string>(types_count);
+      var heroes = new List<Hero>(heroes_count);
+      var lines = new List<string>(lines_count);
+
+      for (int i = 0; i < types_count; i++)
+      {
+        types.Add(RandomString(5, 15));
+      }
+
+      for (int i = 0; i < heroes_count; i++)
+      {
+        heroes.Add(new Hero
+        {
+          Name = RandomString(5, 15),
+          Attack = (uint)random.Next(100, 1000),
+          Type = types[random.Next(0, types_count - 1)],
+        });
+        Guid.NewGuid().ToString("n").Substring(0, 8);
+      }
+
+      // lines genertion
+      for (int j = 0; j < heroes_count; j++)
+      {
+        lines.Add($"add {heroes[j].ToInputString()}");
+      }
+
+      for (int i = 0; i < lines_count - heroes_count; i++)
+      {
+        var r = random.Next(1, 4);
+        switch (r)
+        {
+          case 1:
+            lines.Add($"find {types[random.Next(0, types_count - 1)]}");
+            break;
+          case 2:
+            lines.Add($"power {random.Next(1, heroes_count / 2)}");
+            break;
+          case 3:
+            lines.Add($"remove {heroes[random.Next(1, heroes_count)].Name}");
+            break;
+        }
+      }
+
+      lines.Add("end");
+      File.WriteAllLines("generated.input.txt", lines);
+    }
+
+    private static Random random = new Random();
+    public static string RandomString(int min, int max)
+    {
+      var lenght = random.Next(min, max);
+      const string chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz0123456789";
+      return new string(Enumerable.Repeat(chars, lenght)
+        .Select(s => s[random.Next(s.Length)]).ToArray());
     }
   }
 }

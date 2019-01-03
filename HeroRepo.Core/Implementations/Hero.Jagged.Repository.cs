@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace HeroRepo.Core
 {
   public class HeroJaggedRepository : IHeroRepository
   {
-    public static int INIT_MAX_HEROES = 1000;
+    public static int INIT_MAX_HEROES = 10000;
 
     private IComparer<Hero> _comparer = new HeroComparerer();
     public Dictionary<uint, SortedSet<Hero>> Heroes { get; }
@@ -21,6 +22,7 @@ namespace HeroRepo.Core
       }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Add(Hero hero)
     {
       foreach (var atkSet in Heroes.Values)
@@ -34,6 +36,7 @@ namespace HeroRepo.Core
       return true;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public bool Remove(string heroName)
     {
       var tmp = new Hero(heroName);
@@ -50,16 +53,19 @@ namespace HeroRepo.Core
       return false;
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public IEnumerable<Hero> Find(string type)
     {
       return Search(type : type, top: 10).ToList();
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public IEnumerable<Hero> Power(int top)
     {
       return Search(top: top).ToList();
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private IEnumerable<Hero> Search(string type = null, int top = 10)
     {
       int count = 0;

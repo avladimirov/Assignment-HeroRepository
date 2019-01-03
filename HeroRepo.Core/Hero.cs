@@ -18,5 +18,10 @@ namespace HeroRepo.Core
     {
       return $"{Name}[{Type}]({Attack})";
     }
+
+    public string ToInputString()
+    {
+      return $"{Name} {Type} {Attack}";
+    }
   }
 }
